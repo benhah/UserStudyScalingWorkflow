@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<targetgroup:TargetGroup
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:targetgroup="targetgroup"
+    xsi:schemaLocation="targetgroup ../model/SPD.ecore#//targetgroup"
+    name="calculationService">
+  <PCM_ResourceEnvironment
+      href="palladio/PCMResourceEnvironment.xmi#/"/>
+</targetgroup:TargetGroup>

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="spd" nsURI="http://palladiosimulator.org/ScalingPolicyDefinition/1.0"
+    nsPrefix="spd">
+  <eClassifiers xsi:type="ecore:EClass" name="ScalingPolicy" eSuperTypes="platform:/plugin/org.palladiosimulator.pcm/model/pcm.ecore#//core/entity/Entity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="policyNameInvariant"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A scaling policy determines the complete information for scaling a parituclar target. Each ScalingPolicy is an Entity (PCM), it has a unique identifier and it has a name.  "/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="active" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="adjustmentType" lowerBound="1"
+        eType="#//adjustments/AdjustmentType" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetGroup" lowerBound="1"
+        eType="#//targets/TargetGroup"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="policyConstraints" upperBound="-1"
+        eType="#//constraints/policy/PolicyConstraint" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scalingTrigger" lowerBound="1"
+        eType="#//triggers/ScalingTrigger" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SPD" eSuperTypes="platform:/plugin/org.palladiosimulator.pcm/model/pcm.ecore#//core/entity/Entity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="nameInvariant noSameTargetGroup"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The root elements that consists of all scaling policies under analysis for a given cloud application. The SPD is an Entity (PCM), it has a unique identifier and it has a name.  "/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scalingPolicies" lowerBound="1"
+        upperBound="-1" eType="#//ScalingPolicy" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The set of scaling policies under analysis for the given cloud application model."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetGroups" lowerBound="1"
+        upperBound="-1" eType="#//targets/TargetGroup" containment="true"/>
+  </eClassifiers>
+  <eSubpackages name="targets" nsURI="http://palladiosimulator.org/ScalingPolicyDefinition/Targets/1.0"
+      nsPrefix="targets">
+    <eClassifiers xsi:type="ecore:EClass" name="TargetGroup" abstract="true" eSuperTypes="platform:/plugin/org.palladiosimulator.pcm/model/pcm.ecore#//core/entity/Entity">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A TargetGroup defines a management group in SPD. It is both uniqely identified as well as it has a name, thus it extends from the Entity class of the PCM. "/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="targetConstraints" upperBound="-1"
+          eType="#//constraints/target/TargetConstraint" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ElasticInfrastructure" eSuperTypes="#//targets/TargetGroup">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="PCM_ResourceEnvironment"
+          eType="ecore:EClass platform:/plugin/org.palladiosimulator.pcm/model/pcm.ecore#//resourceenvironment/ResourceEnvironment"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ServiceGroup" eSuperTypes="#//targets/TargetGroup"/>
+    <eClassifiers xsi:type="ecore:EClass" name="CompetingConsumersGroup" eSuperTypes="#//targets/TargetGroup"/>
+  </eSubpackages>
+  <eSubpackages name="adjustments" nsURI="http://palladiosimulator.org/ScalingPolicyDefinition/Adjustments/1.0"
+      nsPrefix="adjustments">
+    <eClassifiers xsi:type="ecore:EClass" name="AdjustmentType" abstract="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="An AdjustmentType determines a type of adjusting a group. "/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RelativeAdjustment" eSuperTypes="#//adjustments/AdjustmentType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The RelativeAdjustment denotes that the group should is adjusted relatively to the current number of elements."/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="percentageGrowthValue"
+          lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+          defaultValueLiteral="0.0">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The percantage value of adjustment e.g., a value of 10 denotes that 10% should be added to the existing capacity."/>
+        </eAnnotations>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="minAdjustmentValue" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" defaultValueLiteral="0">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="A minimum adjustment value in case the percentage is 0. "/>
+        </eAnnotations>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AbsoluteAdjustment" eSuperTypes="#//adjustments/AdjustmentType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The AbsoluteAdjustment denotes that the group is adjusted to a goal value."/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="goalValue" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" defaultValueLiteral="0">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The goalValue determines the target number of elements for a particular group, e.g., a value 5 means that the group will have 5 elements."/>
+        </eAnnotations>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StepAdjustment" eSuperTypes="#//adjustments/AdjustmentType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The StepAdjustment denotes that the group is adjusted by adding or removing a fixed amount of elements."/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="stepValue" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" defaultValueLiteral="0">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The stepValue describes how many elements in the group should be added or removed. For example, a vallue of -1 determines that one element should be removed from the group."/>
+        </eAnnotations>
+      </eStructuralFeatures>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="constraints" nsURI="http://palladiosimulator.org/ScalingPolicyDefinition/Constraints/1.0"
+      nsPrefix="constraints">
+    <eClassifiers xsi:type="ecore:EClass" name="AbstractConstraint" abstract="true"
+        eSuperTypes="platform:/plugin/de.uka.ipd.sdq.identifier/model/identifier.ecore#//Identifier"/>
+    <eSubpackages name="policy" nsURI="http://palladiosimulator.org/ScalingPolicyDefinition/Constraints/Policy/1.0"
+        nsPrefix="policy">
+      <eClassifiers xsi:type="ecore:EClass" name="PolicyConstraint" abstract="true"
+          eSuperTypes="#//constraints/AbstractConstraint"/>
+      <eClassifiers xsi:type="ecore:EClass" name="TemporalConstraint" abstract="true"
+          eSuperTypes="#//constraints/policy/PolicyConstraint"/>
+      <eClassifiers xsi:type="ecore:EClass" name="IntervallConstraint" eSuperTypes="#//constraints/policy/TemporalConstraint">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" lowerBound="1"
+            eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="intervallDuration"
+            lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="CooldownConstraint" eSuperTypes="#//constraints/policy/TemporalConstraint">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="cooldownTime" lowerBound="1"
+            eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxScalingOperations"
+            lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="StateBasedContraint" abstract="true"
+          eSuperTypes="#//constraints/policy/PolicyConstraint"/>
+      <eClassifiers xsi:type="ecore:EClass" name="ThrashingConstraint" eSuperTypes="#//constraints/policy/TemporalConstraint">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="Thrashing constraint is used to constraint the thrashing of resources i.e. increase and decrease of resources. The constraint is defined by the minimum amount of time where no two decicions with adjustments in two oposite directions can occur. "/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="minimumTimeNoThrashing"
+            eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+      </eClassifiers>
+    </eSubpackages>
+    <eSubpackages name="target" nsURI="http://palladiosimulator.org/ScalingPolicyDefinition/Constraints/Target/1.0"
+        nsPrefix="target">
+      <eClassifiers xsi:type="ecore:EClass" name="TargetConstraint" abstract="true"
+          eSuperTypes="#//constraints/AbstractConstraint"/>
+      <eClassifiers xsi:type="ecore:EClass" name="TargetGroupSizeConstraint" eSuperTypes="#//constraints/target/TargetConstraint">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="minSize" lowerBound="1"
+            eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxSize" lowerBound="1"
+            eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eClassifiers>
+    </eSubpackages>
+  </eSubpackages>
+  <eSubpackages name="triggers" nsURI="http://palladiosimulator.org/ScalingPolicyDefinition/Triggers/1.0"
+      nsPrefix="triggers">
+    <eClassifiers xsi:type="ecore:EEnum" name="AGGREGATIONMETHOD">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Enum for the following aggregation methods: MIN, MAX, AVERAGE, SUM that are relevant for different triggers."/>
+      </eAnnotations>
+      <eLiterals name="AVERAGE"/>
+      <eLiterals name="MAX" value="1"/>
+      <eLiterals name="MIN" value="2"/>
+      <eLiterals name="MEDIAN" value="3"/>
+      <eLiterals name="SUM" value="4"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="HDDUSAGETYPE">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Enum for the type of HDD usage: READ, WRITE"/>
+      </eAnnotations>
+      <eLiterals name="READ"/>
+      <eLiterals name="WRITE" value="1"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="NETWORKUSAGETYPE">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Enum for the following Network Usage types: SEND, RECEIVE which are relevant to distinuish the type of use for a network resource."/>
+      </eAnnotations>
+      <eLiterals name="SEND"/>
+      <eLiterals name="RECEIVE" value="1"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ScalingTrigger" abstract="true" eSuperTypes="platform:/plugin/de.uka.ipd.sdq.identifier/model/identifier.ecore#//Identifier">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ScalingTrigger is a core concept in SPD. It entails both the information that is fetched from the simulation and models as well as the type of analysis that is performed on that information. It is uniquely identified as it extends from Idenfier (PCM)."/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="BaseTrigger" abstract="true" eSuperTypes="#//triggers/ScalingTrigger">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A BaseTrigger is a class of ScalingTrigger that works on a Stimulus (that entails the information gathered from the environment) and an ExpectedValue. Once the Stimulus 'matches' the ExpectedValue the trigger fires and an adjustment to the model is made. The matching of Stimulus with an ExpectedValue is determined by the subclasses. This can entail simple analysis through relational operators or more advanced transformation/aggregation of the Stimulus and the ExpectedValue. "/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="stimulus" lowerBound="1"
+          eType="#//triggers/stimuli/Stimulus" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="expectedValue" lowerBound="1"
+          eType="#//triggers/expectations/ExpectedValue" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ComposedTrigger" eSuperTypes="#//triggers/ScalingTrigger">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A ComposedTrigger composes two or more ScalingTriggers through a logical operator (i.e., AND, OR, XOR). This enables the defintion of composed triggers which encapsulate more advanced conditions on the state to fire the trigger. "/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="scalingtrigger" lowerBound="2"
+          upperBound="-1" eType="#//triggers/ScalingTrigger" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logicalOperator" eType="#//triggers/LogicalOperator"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="LogicalOperator">
+      <eLiterals name="AND"/>
+      <eLiterals name="OR" value="1"/>
+      <eLiterals name="XOR" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SimpleFireOnValue" eSuperTypes="#//triggers/BaseTrigger">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The SimpleFireOnValue trigger the most simplistic BaseTrigger that works on the fed stimulus through a relational operator with an expected value. In case 'LessThen' is specified then the the trigger will fire upon stiumuls &lt;= expectedValue. "/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="relationalOperator" eType="#//triggers/RelationalOperator"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="RelationalOperator">
+      <eLiterals name="LessThan"/>
+      <eLiterals name="GreaterThan" value="1"/>
+      <eLiterals name="EqualTo" value="2"/>
+      <eLiterals name="LessThanOrEqualTo" value="3"/>
+      <eLiterals name="GreaterThanOrEqualTo" value="4"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="TrendPattern">
+      <eLiterals name="Increasing"/>
+      <eLiterals name="Decreasing" value="1"/>
+      <eLiterals name="NonIncreasing" value="2" literal="NonIncreasing"/>
+      <eLiterals name="NonDecreasing" value="3" literal="NonDecreasing"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SimpleFireOnTrend" eSuperTypes="#//triggers/BaseTrigger">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The SimpleFireOnTrend trigger is a more advanced trigger that aggregates values and determines a trend and fires whenever this trend is as an expectedTrend value. "/>
+      </eAnnotations>
+    </eClassifiers>
+    <eSubpackages name="stimuli" nsURI="http://palladiosimulator.org/ScalingPolicyDefinition/Triggers/Stimuli/1.0"
+        nsPrefix="stimuli">
+      <eClassifiers xsi:type="ecore:EClass" name="Stimulus" abstract="true">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The Stimulus defines observable information during the simulation of an architectural model upon which a trigger can fire. Each Stimulus "/>
+        </eAnnotations>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="TargetGroupStateStimulus" abstract="true"
+          eSuperTypes="#//triggers/stimuli/Stimulus">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The TargetGroupStateStimulus classifies all stimuli that has the source from the elements that are being adjusted by the policy. "/>
+        </eAnnotations>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="SimulationStateStimulus" abstract="true"
+          eSuperTypes="#//triggers/stimuli/Stimulus">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The SimulationStateStimulus classifies all stimuli that has the source from the simulation state. A direct subclass is for example the SimulationTime stimulus. "/>
+        </eAnnotations>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="SoruceInterfaceStimulus" abstract="true"
+          eSuperTypes="#//triggers/stimuli/Stimulus">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The SourceInterfaceStimulus encapsulates all stimuli that is comming from the source of the target group. For example, in case of a load balanced service then the operation response time is a stimulus that"/>
+        </eAnnotations>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="OperationResponseTime" eSuperTypes="#//triggers/stimuli/SoruceInterfaceStimulus">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="A stimulus based on the response time of a given operation. It requires specifying the operationSignature."/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="operationSignature"
+            eType="ecore:EClass platform:/plugin/org.palladiosimulator.pcm/model/pcm.ecore#//repository/OperationSignature">
+          <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+            <details key="documentation" value="The operation from which the response time is used. "/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="NumberOfElements" eSuperTypes="#//triggers/stimuli/TargetGroupStateStimulus">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The NumberOfElements is a concrete stimulus that represents the number of elements in the target group. "/>
+        </eAnnotations>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="ManagedElementsStateStimulus" abstract="true"
+          eSuperTypes="#//triggers/stimuli/TargetGroupStateStimulus">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The ManagedElementsStateStiumlus classifies the stimuli that has the source in the managed elements. A ManagedElementsStateStimulus has to specify how the aggregation across elements is performed."/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="aggregationOverElements"
+            eType="#//triggers/AGGREGATIONMETHOD">
+          <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+            <details key="documentation" value="The aggregation accross different resource containers in the Target Group. For example if two containers C1 and C2 have a resource utilizaiton of 0.6, respectively 0.8, then choosing AVERAGE as an aggreagtion method then it determines that the value of 0.7 should be compared against the threshold value. "/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="CPUUtilization" eSuperTypes="#//triggers/stimuli/ResourceUtilizationStimulus">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="A resource utilization based stimulus based on the CPU resource."/>
+        </eAnnotations>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="MemoryUtilization" eSuperTypes="#//triggers/stimuli/ResourceUtilizationStimulus">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="A resource utilization based stimulus based on the memory resource."/>
+        </eAnnotations>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="SimulationTime" eSuperTypes="#//triggers/stimuli/SimulationStateStimulus">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="A stimulus based on the simulation time."/>
+        </eAnnotations>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="HDDUtilization" eSuperTypes="#//triggers/stimuli/ResourceUtilizationStimulus">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="A resource utilization based stimulus based on the HDD resource."/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="usageType" eType="#//triggers/HDDUSAGETYPE"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="ResourceUtilizationStimulus" abstract="true"
+          eSuperTypes="#//triggers/stimuli/ManagedElementsStateStimulus"/>
+      <eClassifiers xsi:type="ecore:EClass" name="TaskCount" eSuperTypes="#//triggers/stimuli/ManagedElementsStateStimulus">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The TaskCount stimulus is a concrete stimulus that represents the number of tasks that are currently being processed by the managed elements."/>
+        </eAnnotations>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="QueueLength" eSuperTypes="#//triggers/stimuli/SoruceInterfaceStimulus">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="A queue length based stimulus from the source of the target group. A precondition is that the target group is of type CompetingConsumers. "/>
+        </eAnnotations>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="NetworkUtilization" eSuperTypes="#//triggers/stimuli/ResourceUtilizationStimulus">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="If the link has been modelled with a certain capacity, then the NetworkUtilization of a certain type determines the fraction of that capacity that is being used by the elements of the target group. "/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="usageType" eType="#//triggers/NETWORKUSAGETYPE">
+          <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+            <details key="documentation" value="The type of network usage."/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </eSubpackages>
+    <eSubpackages name="expectations" nsURI="http://palladiosimulator.org/ScalingPolicyDefinition/Triggers/Expectations/1.0"
+        nsPrefix="expectations">
+      <eClassifiers xsi:type="ecore:EClass" name="ExpectedValue" abstract="true"/>
+      <eClassifiers xsi:type="ecore:EClass" name="ExpectedPrimitive" abstract="true"
+          eSuperTypes="#//triggers/expectations/ExpectedValue">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="There are three different primitives in the context of triggers: percentages, time, and count."/>
+        </eAnnotations>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="NoExpectation" eSuperTypes="#//triggers/expectations/ExpectedValue"/>
+      <eClassifiers xsi:type="ecore:EClass" name="ExpectedPercentage" eSuperTypes="#//triggers/expectations/ExpectedPrimitive">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="ExpectedCount" eSuperTypes="#//triggers/expectations/ExpectedPrimitive">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="count" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="ExpectedTime" eSuperTypes="#//triggers/expectations/ExpectedPrimitive">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="ExpectedTrend" eSuperTypes="#//triggers/expectations/ExpectedValue">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="trend" eType="#//triggers/TrendPattern"/>
+      </eClassifiers>
+    </eSubpackages>
+  </eSubpackages>
+</ecore:EPackage>

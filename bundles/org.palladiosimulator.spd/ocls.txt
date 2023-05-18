@@ -1,0 +1,2 @@
+	invariant
+		antinomicalTargets: self.targetGroups->exists(t | t.oclIsKindOf(spd::targets::ElasticInfrastructure)) xor (self.targetGroups->exists(t | t.oclIsKindOf(spd::targets::ElasticQueue)) or self.targetGroups->exists(t | t.oclIsKindOf(spd::targets::ElasticService)));

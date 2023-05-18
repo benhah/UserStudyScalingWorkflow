@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spd:SPD xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adjustments="http://palladiosimulator.org/ScalingPolicyDefinition/Adjustments/1.0" xmlns:expectations="http://palladiosimulator.org/ScalingPolicyDefinition/Triggers/Expectations/1.0" xmlns:policy="http://palladiosimulator.org/ScalingPolicyDefinition/Constraints/Policy/1.0" xmlns:spd="http://palladiosimulator.org/ScalingPolicyDefinition/1.0" xmlns:stimuli="http://palladiosimulator.org/ScalingPolicyDefinition/Triggers/Stimuli/1.0" xmlns:targets="http://palladiosimulator.org/ScalingPolicyDefinition/Targets/1.0" xmlns:triggers="http://palladiosimulator.org/ScalingPolicyDefinition/Triggers/1.0" id="_3Ecf4O80Ee2hb_0aHEOiDQ">
+  <scalingPolicies id="_BQrDUO81Ee2hb_0aHEOiDQ" entityName="UpscalingPolicy" targetGroup="_TpWDwO81Ee2hb_0aHEOiDQ">
+    <adjustmentType xsi:type="adjustments:RelativeAdjustment" percentageGrowthValue="10.0"/>
+    <policyConstraints xsi:type="policy:CooldownConstraint" id="_LyjtsO81Ee2hb_0aHEOiDQ" cooldownTime="2.0"/>
+    <scalingTrigger xsi:type="triggers:SimpleFireOnValue" id="_BvMMUPGbEe2SN8L1PC7kiA" relationalOperator="GreaterThan">
+      <stimulus xsi:type="stimuli:CPUUtilization" aggregationOverElements="MAX"/>
+      <expectedValue xsi:type="expectations:ExpectedPercentage" value="70.0"/>
+    </scalingTrigger>
+  </scalingPolicies>
+  <scalingPolicies id="_Ba0d0O81Ee2hb_0aHEOiDQ" entityName="DownscalingPolicy" targetGroup="_TpWDwO81Ee2hb_0aHEOiDQ">
+    <adjustmentType xsi:type="adjustments:RelativeAdjustment" percentageGrowthValue="-20.0"/>
+    <policyConstraints xsi:type="policy:CooldownConstraint" id="_MexTce81Ee2hb_0aHEOiDQ" cooldownTime="2.0"/>
+    <scalingTrigger xsi:type="triggers:SimpleFireOnValue" id="_li1O0PGbEe2SN8L1PC7kiA">
+      <stimulus xsi:type="stimuli:CPUUtilization" aggregationOverElements="MIN"/>
+      <expectedValue xsi:type="expectations:ExpectedPercentage" value="30.0"/>
+    </scalingTrigger>
+  </scalingPolicies>
+  <targetGroups xsi:type="targets:ElasticInfrastructure" id="_TpWDwO81Ee2hb_0aHEOiDQ" entityName="CloudSystemController"/>
+</spd:SPD>

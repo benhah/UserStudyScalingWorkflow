@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<de.unistuttgart.sqa.slingshot.spd:ScalingPolicy xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:de.unistuttgart.sqa.slingshot.spd="http://de/unistuttgart/sqa/slingshot/spd"
+    xsi:schemaLocation="http://de/unistuttgart/sqa/slingshot/spd ../model/SPD.ecore"/>

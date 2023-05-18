@@ -1,0 +1,38 @@
+import 'SPD.ecore'
+
+package spd
+
+
+context SPD
+inv antinomicalTargets: self.targetGroups->exists(t | t.oclIsKindOf(spd::targets::ElasticInfrastructure)) xor (self.targetGroups->exists(t | t.oclIsKindOf(spd::targets::CompetingConsumersGroup)) or self.targetGroups->exists(t | t.oclIsKindOf(spd::targets::ServiceGroup)))
+inv atLeastOneTarget: self.targetGroups->notEmpty()
+
+context ScalingPolicy
+inv targetHasToBeSet: self.targetGroup <> null
+
+endpackage
+
+package spd::targets
+
+context TargetGroup
+inv singleGroupSizeConstraint('The TargetGroup can have only a single TargetGroupSizeConstraint'): self.targetConstraints->collect(x | x.oclIsTypeOf(spd::constraints::target::TargetGroupSizeConstraint))->size()<2
+endpackage
+
+package spd::triggers
+endpackage
+
+package spd::adjustments
+
+context AbsoluteAdjustment
+inv positiveGoalValue('The AbsoluteAdjustemnt has to specify a positive goal value'): 
+	self.goalValue>0
+
+context RelativeAdjustment
+inv nonZeroValue('The minAdjustmentValue for a RelativeAdjustment must not be zero'): 
+	self.minAdjustmentValue<>0
+
+context StepAdjustment
+inv nonZeroValue('The stepValue for StepAdjustment must not be zero'): 
+	self.stepValue<>0
+
+endpackage

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<de.unistuttgart.sqa.slingshot.spd:SPD
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:de.unistuttgart.sqa.slingshot.spd="http://de/unistuttgart/sqa/slingshot/spd"
+    xmlns:de.unistuttgart.sqa.slingshot.spd.adjustments="http://de/unistuttgart/sqa/slingshot/spd/adjustments"
+    xmlns:de.unistuttgart.sqa.slingshot.spd.constraints.target="http://de/unistuttgart/sqa/slingshot/spd/constraints/target"
+    xmlns:de.unistuttgart.sqa.slingshot.spd.targets="http://de/unistuttgart/sqa/slingshot/spd/targets"
+    xmlns:de.unistuttgart.sqa.slingshot.spd.triggers="http://de/unistuttgart/sqa/slingshot/spd/triggers"
+    xsi:schemaLocation="http://de/unistuttgart/sqa/slingshot/spd ../../model/SPD.ecore http://de/unistuttgart/sqa/slingshot/spd/adjustments ../../model/SPD.ecore#//adjustments http://de/unistuttgart/sqa/slingshot/spd/constraints/target ../../model/SPD.ecore#//constraints/target http://de/unistuttgart/sqa/slingshot/spd/targets ../../model/SPD.ecore#//targets http://de/unistuttgart/sqa/slingshot/spd/triggers ../../model/SPD.ecore#//triggers">
+  <scalingPolicies
+      name="Infra Scale Out Policy "
+      targetGroup="//@targetGroups.0">
+    <scalingTrigger
+        xsi:type="de.unistuttgart.sqa.slingshot.spd.triggers:CPUUtilizationTrigger"/>
+    <adjustmentType
+        xsi:type="de.unistuttgart.sqa.slingshot.spd.adjustments:RelativeAdjustment"
+        percentageValue="10.0"/>
+  </scalingPolicies>
+  <scalingPolicies
+      name="Infra Scale In Policy"
+      targetGroup="//@targetGroups.0">
+    <scalingTrigger
+        xsi:type="de.unistuttgart.sqa.slingshot.spd.triggers:TaskCountTrigger"/>
+    <adjustmentType
+        xsi:type="de.unistuttgart.sqa.slingshot.spd.adjustments:RelativeAdjustment"
+        percentageValue="10.0"/>
+  </scalingPolicies>
+  <targetGroups
+      xsi:type="de.unistuttgart.sqa.slingshot.spd.targets:ElasticInfrastructure"
+      name="MyCluster">
+    <targetConstraints
+        xsi:type="de.unistuttgart.sqa.slingshot.spd.constraints.target:TargetGroupSizeConstraint"
+        minSize="1"
+        maxSize="10"/>
+  </targetGroups>
+</de.unistuttgart.sqa.slingshot.spd:SPD>
