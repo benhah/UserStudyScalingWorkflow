@@ -10,7 +10,7 @@ This study aims to collect feedback on the usability of the workflow in comparis
 For this study, we will follow the following scenario:
 You are working at a company which provides a website on which students can sign up for courses and access materials from these courses. This website is hosted on a cloud system in order to accommodate changing amounts of students accessing it at any point in time. You are tasked with creating scaling policies for this cloud system which automatically ensures that the website at any point in time does neither get a lot of unused (but still paid for) cloud resources, nor too little, which would mean that the site is struggling to handle the load, or that these unwanted situations are at least kept to a minimum. For the sake of simplicity, we will use the CPU-Utilization as the only resource being tracked. I will fall back on this scenario later during the study.
 
-##Setup Instruction
+## Setup Instruction
 Download and unpack the [Palladio Bench](https://updatesite.palladio-simulator.com/palladio-bench-product/releases/5.1.0/) version for your system as well as the [JDK 11.0.2](https://jdk.java.net/archive/). 
 Palladio Bench is a version of Eclipse that has all of the plug-ins we will need pre-installed.
 Inside of the unzipped Palladio Bench folder you should find the executable for the application. Open Palladio Bench by clicking this executable.
@@ -57,9 +57,9 @@ You can understand the policies as follows:
 
 ![Policy Description](img/Policy%20Description.png)
 
-##Workflows
+## Workflows
 
-###Palladio Workflow
+### Palladio Workflow
 
 I will quickly introduce the Palladio workflow and the new workflow we will test out.
 
